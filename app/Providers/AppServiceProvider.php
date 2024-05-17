@@ -23,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Definir el namespace por defecto para los modelos
+        $this->app->alias('Illuminate\Database\Eloquent\Model', 'Model');
+        $this->app->bind('model', function () {
+            return new \App\Domain\Entities;
+        });
     }
 }
