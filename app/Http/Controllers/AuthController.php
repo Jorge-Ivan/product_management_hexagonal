@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Application\UseCases\Auth\RegisterUser;
@@ -19,15 +19,15 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $user = $this->registerUser->execute($userData);
-
-        return response()->json(['user' => $user], 201);
+        $data = $request->all();
+        $result = $this->registerUser->execute($data);
+        return response()->json($result, 201);
     }
 
     public function login(Request $request)
     {
-        $userData = $this->loginUser->execute($credentials);
-
-        return response()->json($userData);
+        $credentials = $request->only('email', 'password');
+        $result = $this->loginUser->execute($credentials);
+        return response()->json($result);
     }
 }

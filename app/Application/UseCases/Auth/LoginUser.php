@@ -1,7 +1,10 @@
 <?php
+namespace App\Application\UseCases\Auth;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Domain\Repositories\UserRepositoryInterface;
 use App\Application\Validators\Auth\LoginFieldsValidator;
 
 class LoginUser
@@ -17,7 +20,7 @@ class LoginUser
 
     public function execute(array $credentials): array
     {
-        $credentialsFields = $this->userValidator->validate($credentials);
+        $credentialsFields = $this->loginFieldsValidator->validate($credentials);
         $user = $this->userRepository->findByEmail($credentialsFields['email']);
 
         if (!$user || !Hash::check($credentialsFields['password'], $user['password'])) {
