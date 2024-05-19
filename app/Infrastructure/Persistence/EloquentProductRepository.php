@@ -16,6 +16,12 @@ class EloquentProductRepository implements ProductRepositoryInterface
         return $product->update($data);
     }
 
+    public function delete(Product $product): bool
+    {
+        $product->categories()->detach();
+        return $product->delete();
+    }
+
     public function findById(int $id): ?Product
     {
         return Product::find($id);
