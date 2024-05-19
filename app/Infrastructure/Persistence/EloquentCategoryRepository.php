@@ -16,6 +16,12 @@ class EloquentCategoryRepository implements CategoryRepositoryInterface
         return $category->update($data);
     }
 
+    public function delete(Category $category): bool
+    {
+        $category->products()->detach();
+        return $category->delete();
+    }
+
     public function findById(int $id): ?Category
     {
         return Category::find($id);

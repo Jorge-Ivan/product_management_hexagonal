@@ -14,4 +14,12 @@ class Product extends Model
         'stock',
         'price'
     ];
+
+    /**
+     * The categories that belong to the product.
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
 }
