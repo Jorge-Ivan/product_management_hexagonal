@@ -5,6 +5,10 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Domain\Repositories\UserRepositoryInterface;
 use App\Infrastructure\Persistence\EloquentUserRepository;
+use App\Domain\Repositories\CategoryRepositoryInterface;
+use App\Infrastructure\Persistence\EloquentCategoryRepository;
+use App\Domain\Repositories\ProductRepositoryInterface;
+use App\Infrastructure\Persistence\EloquentProductRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(UserRepositoryInterface::class, EloquentUserRepository::class);
+        $this->app->bind(CategoryRepositoryInterface::class, EloquentCategoryRepository::class);
+        $this->app->bind(ProductRepositoryInterface::class, EloquentProductRepository::class);
     }
 
     /**
