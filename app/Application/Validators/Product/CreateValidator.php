@@ -10,7 +10,7 @@ class CreateValidator
             'name' => 'required|string|max:255',
             'stock' => 'required|integer|min:0',
             'price' => 'required|integer',
-            'categories.*' => 'number|exists:categories'
+            'categories.*' => 'integer|exists:categories,id'
         ])->validate();
     }
 }

@@ -3,17 +3,43 @@ namespace App\Infrastructure\Persistence;
 
 use App\Domain\Entities\Product;
 use App\Domain\Repositories\ProductRepositoryInterface;
+use DB;
 
 class EloquentProductRepository implements ProductRepositoryInterface
 {
     public function create(array $data): Product
     {
-        return Product::create($data);
+        DB::beginTransaction();
+        try {
+            $product = new Product();
+            $product->fill($data);
+            $product->save();
+            if(isset($data['categories']) && !empty($data['categories']))
+                $product->categories()->sync($data['categories']);
+            DB::commit();
+
+            return $product;
+        } catch (\Throwable $th) {
+            DB::rollback();
+            throw $th;
+        }
     }
 
     public function update(Product $product, array $data): bool
     {
-        return $product->update($data);
+        DB::beginTransaction();
+        try {
+            $product->fill($data);
+            $product->save();
+            if(isset($data['categories']) && !empty($data['categories']))
+                $product->categories()->sync($data['categories']);
+            DB::commit();
+
+            return true;
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return false;
+        }
     }
 
     public function delete(Product $product): bool
@@ -34,7 +60,7 @@ class EloquentProductRepository implements ProductRepositoryInterface
 
     public function findByCategoryAndPrice(array $filters): array
     {
-        $query = Product::query();
+        $query = Product::select('id', 'price', 'name')->where('stock', '>', 0);
         if (isset($filters['category_id'])) {
             $query->whereHas('categories', function($q) use ($filters) {
                 $q->where('category_id', $filters['category_id']);
