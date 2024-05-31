@@ -13,7 +13,7 @@ Desarrollar una aplicación en Laravel utilizando arquitectura hexagonal que per
 
 ## Documentación API’s
 
-La documentación de las API's se realizan con Postman y puede inf¿grsar [aquí](https://documenter.getpostman.com/view/26172346/2sA3Qwap8T).
+La documentación de las API's se realizan con Postman y puede ingresar [aquí](https://documenter.getpostman.com/view/26172346/2sA3Qwap8T).
 
 ## Realizado por:
 [Jorge Iván Carrillo González](https://gitlab.infokairos.com.co/jorge_carrillo)
